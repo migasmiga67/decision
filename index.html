@@ -80,10 +80,10 @@
         <!-- Tryb: opcje ręczne vs AI -->
         <div class="mode-toggle">
             <button class="mode-btn active" id="modeList" onclick="setMode('list')">opcje</button>
-            <button class="mode-btn" id="modeAi" onclick="setMode('ai')">ai</button>
+            <button class="mode-btn" id="modeAi" onclick="setMode('ai')">fredek</button>
         </div>
 
-        <textarea class="hero-input" id="qInput" placeholder="Co robimy?" rows="2"></textarea>
+        <textarea class="hero-input" id="qInput" placeholder="pytanko masz jakies?" rows="2"></textarea>
 
         <!-- Sekcja ręcznych opcji -->
         <div id="listSection">
@@ -197,7 +197,7 @@
             goBtn.classList.add('loading');
             spinner.style.display = 'block';
             btnLabel.textContent = 'Myślę...';
-            resInner.innerHTML = '<div class="label">pytam AI...</div>';
+            resInner.innerHTML = '<div class="label">pytam fredka...</div>';
 
             try {
                 const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -236,7 +236,7 @@ ZASADY których NIGDY nie łamiesz:
                 } else {
                     const answer = data.choices[0].message.content;
                     resInner.innerHTML = `
-                        <div class="label" style="color:var(--green);margin-bottom:10px">decyzja AI</div>
+                        <div class="label" style="color:var(--green);margin-bottom:10px">decyzja fredka</div>
                         <div style="text-align:left;font-size:15px;line-height:1.6">${answer}</div>
                     `;
                 }
