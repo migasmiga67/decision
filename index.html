@@ -80,7 +80,7 @@
         <!-- Tryb: opcje ręczne vs AI -->
         <div class="mode-toggle">
             <button class="mode-btn active" id="modeList" onclick="setMode('list')">opcje</button>
-            <button class="mode-btn" id="modeAi" onclick="setMode('ai')">fredek</button>
+            <button class="mode-btn" id="modeAi" onclick="setMode('ai')">ai</button>
         </div>
 
         <textarea class="hero-input" id="qInput" placeholder="Co robimy?" rows="2"></textarea>
@@ -197,7 +197,7 @@
             goBtn.classList.add('loading');
             spinner.style.display = 'block';
             btnLabel.textContent = 'Myślę...';
-            resInner.innerHTML = '<div class="label">pytam fredka...</div>';
+            resInner.innerHTML = '<div class="label">pytam AI...</div>';
 
             try {
                 const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -212,11 +212,18 @@
                         messages: [
                             {
                                 role: 'system',
-                                content: 'Jesteś pomocnym decydentem. Podejmuj konkretne, krótkie decyzje po polsku. Odpowiadaj zwięźle — max 3 zdania.'
+                                content: `Jesteś maszyną decyzyjną. Zawsze podejmujesz jedną, konkretną decyzję po polsku.
+ZASADY których NIGDY nie łamiesz:
+- Wybierz JEDNĄ opcję i powiedz co robić. Nigdy dwie, nigdy "to zależy".
+- NIE wymieniaj plusów i minusów. NIE porównuj opcji.
+- NIE mów "to zależy od ciebie", "sam zdecyduj", "możesz też".
+- NIE pytaj o dodatkowe informacje.
+- Odpowiedź: max 2 zdania. Pierwsze — decyzja. Drugie — jedno zdanie uzasadnienia (opcjonalne).
+- Zacznij od razu od decyzji, np. "Idź na siłownię." lub "Wybierz opcję A."`
                             },
                             {
                                 role: 'user',
-                                content: 'Pomóż mi zdecydować: ' + q
+                                content: q
                             }
                         ]
                     })
@@ -229,7 +236,7 @@
                 } else {
                     const answer = data.choices[0].message.content;
                     resInner.innerHTML = `
-                        <div class="label" style="color:var(--green);margin-bottom:10px">decyzja fredka</div>
+                        <div class="label" style="color:var(--green);margin-bottom:10px">decyzja AI</div>
                         <div style="text-align:left;font-size:15px;line-height:1.6">${answer}</div>
                     `;
                 }
